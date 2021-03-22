@@ -1,0 +1,79 @@
+
+{% load static %}
+
+{% include 'partials/alerts.html' %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		body{
+			padding: 8px;
+		}
+
+		.container{
+		width:700px;
+		height: 500px;
+		text-align: center;
+		margin-right: auto;
+		margin-left: auto;
+		border:1px solid black;
+	}
+
+	.header{
+		text-align: center;
+		height: 150px;
+		border-bottom: 3px solid black;
+	}
+	.header img{
+		width: 100px;
+	}
+	h3{
+
+		color:red;
+		text-decoration-line: underline;
+
+	}
+	.container h4{
+		display: inline;
+		margin: 40px;
+	}
+	.Content p{
+		margin: 1px 20px 0px 0px;
+		padding: 20px;
+		text-align: justify;
+		position: relative;
+
+	}
+	.Signature h4{
+		position: absolute;
+		right: 250px;
+
+
+		text-decoration-line: overline;
+	}
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		<div class="header">
+			<img src="{% static 'images/laww.png' %}">
+			<h2>*Ward name*</h2>
+		</div>
+		<h3>Notice Regarding Public Recommendation Letter</h3>
+		<h4>Notice no:{{ citizen.id }}</h4>
+		<h4>Date:</h4>
+		<div class="Content">
+			<p>This is the citizenship recommendation letter for the applicant named <strong>{{ citizen.first_name }} {{citizen.last_name }}</strong>.He/She is a daughter of<strong> {{ citizen.father_name }}</strong> and granddaughter of <strong>{{ citizen.grandfather_name }}</strong>.Her Date of birth according to birth certificate is <strong>{{ citizen.dob }}</strong>.</p>
+
+		<div class="Signature">
+			<h4>Chairperson</h4>
+		</div>
+	</div>
+	</div>
+
+
+</body>
+</html>

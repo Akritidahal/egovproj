@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Response</title>
+	<style>
+		.container{
+			width: 100%;
+		}
+
+
+		.container h3{
+			text-align: center;
+			width:300px;
+			height: 80px;
+			padding-top: 50px;
+			box-shadow: 10px 10px 8px 10px #888888;
+			position: absolute;
+			top:50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h3>You have already filled up the form!</h3>
+	</div>
+
+</body>
+</html>
+{% endblock %}

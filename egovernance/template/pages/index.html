@@ -1,0 +1,404 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{
+			margin:0px;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: 'Poppins',sans-serif;
+		}
+		body{
+
+			justify-content: center;
+			align-items: center;
+			background:url("{% static 'images/mountain.png' %}");
+			background-size: cover;
+			padding: 10px;
+		}
+		.container{
+
+			width: 80%;
+			margin:auto;
+			background-color: white;
+			padding: 25px 30px;
+			border:2px solid indigo;
+
+
+		}
+		.container .header{
+			height: 100px;
+		}
+		.container .header img{
+			height: 99px;
+			width:99px;
+			float:left;
+			padding-left: 10px;
+		}
+
+		.container .user-details form{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			margin:20px 0 12px 0;
+		}
+		.container .address-details form{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			margin:20px 0 12px 0;
+		}
+
+
+
+		 .user-details form .box{
+			margin-bottom: 15px;
+			width: calc(100% / 2 - 15px);
+		}
+		 .address-details form .box{
+			margin-bottom: 15px;
+			width: calc(100% / 2 - 15px);
+		}
+
+		.user-details .box label{
+
+			font-weight: 500;
+			margin-bottom: 5px;
+		}
+		.address-details .box label{
+
+			font-weight: 500;
+			margin-bottom: 5px;
+
+		}
+
+		.user-details .box input,required select{
+			height: 30px;
+			width: 100%;
+			outline: none;
+			border-radius: 5px;
+			border:1px solid black;
+			padding-left: 15px;
+			font-size: 14px;
+			border-bottom-width: 2px;
+			transition: all 0.3s ease;
+
+		}
+
+
+		.user-details .box input:required valid, select:valid{
+			border-color:#9b59b6;
+		}
+
+		.address-details .box input{required 
+			height: 30px;
+			width: 100%;
+			outline: none;
+			border-radius: 5px;
+			border:1px solid black;
+			padding-left: 15px;
+			font-size: 14px;
+			border-bottom-width: 2px;
+			transition: all 0.3s ease;
+
+		}
+		.address-details .box input:required valid{
+			border-color:#9b59b6;
+		}
+
+		.border{
+			width: 100%;
+			height: 2px;
+			background-color: indigo;
+		}
+
+
+		table, tr, td{
+			border:1px solid indigo;
+			width: 100%;
+			height: 40px;
+			border-collapse: collapse;
+
+
+		}
+
+		td {
+			color:red;
+			text-align: center;
+
+		}
+		td .header{
+			background:linear-gradient(135deg, #71b7e6, #9b59b6);
+			color: white;
+			height: 100px;
+			width: 100%;
+
+		}
+		td .mandatory{
+			color: black;
+
+
+		}
+		td .register{
+			padding-bottom: 5px;
+
+		}
+
+		.button form input
+required 		{
+			width: 100%;
+			height: 40px;
+			background:linear-gradient(135deg, #71b7e6, #9b59b6);
+			border-radius:8px;
+			color: white;
+			font-size: 20px;
+			font-weight: 500;
+			letter-spacing: 1px;
+			border:none;
+		}
+
+		@media (max-width:548px){
+			.container{
+				max-width: 100%;
+			}
+
+		 .user-details form .box{
+			margin-bottom: 15px;
+			width: 100%;
+		}
+		 .address-details form .box{
+			margin-bottom: 15px;
+			width: 100%;
+		}
+		.container .user-details form{
+			max-height: 300px;
+			overflow-y:scroll;
+		}
+		.container .address-details form{
+			max-height: 300px;
+			overflow-y:scroll;
+		}
+	}
+
+
+
+
+
+	</style>
+</head>
+
+<body>
+    <div class="container">
+        {% include 'partials/alerts.html' %}
+        <table>
+            <tr>
+                <td>
+                    <div class="header">
+                        <img src="{% static 'images/laww.png' %}">
+                        <img src="{% static 'images/flag1.gif' %}" style="float:right;">
+                        <h1>Government Of Nepal</h1>
+                        <h3>Ministry Of Home Affairs</h3>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="register">
+                        <h3>Public Recommendation Registration Form </h3>
+                    </div>
+                    <div class="mandatory">
+                        <h5 style="color: indigo;">*All the fields are mandatory to fill up*</h5>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="user-details">
+            <h2 style="padding-top: 10px; color: red;">Demographic Details</h2>
+            <form action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                {% if user.is_authenticated %}
+
+                <div class="box">
+                    <label for="firstname">First Name</label>
+                    <input readonly type="text" placeholder="Enter your first Name" value="{{ user.first_name }}" name="first_name" id="firstname" />
+                </div>
+                <div class="box">
+                    <label for="lastname">Last Name</label>
+                    <input readonly type="text" placeholder="Enter your last Name" value="{{ user.last_name }}" name="last_name" id="lastname" />
+                </div>
+                <div class="box">
+                    <label class="required" for="dob">Dob:</label>
+                    <input required type="date" name="dob" id="dob" class="DateField" size="10" required onchange="calcAge(this.value)">
+                    <span id="age_error" style="color:red;"></span>
+                </div>
+                <div class="box">
+                    <label for="email">Email</label>
+                    <input readonly type="email" placeholder="Enter your email" value="{{user.email }}" name="email" id="email" />
+                </div>
+                {% endif %}
+
+                <div class="box">
+                    <label for="Phone">Phone </label>
+                    <input required type="number" placeholder="Enter your number" name="Phone" onfocusout="validation(this.value)" id="Phone" />
+                    <span id="phone_error"  style="color:red;"></span>
+                </div>
+                <div class="box">
+                    <label for="age">Age </label>
+                    <input required type="number" name="Age" id="age" />
+
+                </div>
+                <div class="box">
+                    <label for="gender">Gender</label>
+                    <select type="select" id=gender name="gender">
+                        <option disabled selected value="">Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="others">others</option>
+                    </select>
+                </div>
+                <div class="box">
+                    <label for="fathername">Father's name </label>
+                    <input required type="text" placeholder="Enter your father full name" name="fathername" id="fathername">
+                </div>
+                <div class="box">
+                    <label for="mothername">Mother's name </label>
+                    <input required type="text" placeholder="Enter your mother full name" name="mothername" id="mothername">
+                </div>
+                <div class="box">
+                    <label for="husbandname">Husband's name </label>
+                    <input type="text" placeholder="Enter your husband full name" name="husbandname" id="husbandname">
+                </div>
+                <div class="box">
+                    <label for="GrandFather">GrandFather's name </label>
+                    <input required type="text" placeholder="Enter your grandfather full name" name="grand_father_name" id="GrandFather">
+                </div>
+                <div class="box">
+                    <label for="fathercitizenshipnumber">Father's citizenship Number </label>
+                    <input required type="text" name="father_citizenship_number" id="fathercitizenshipnumber">
+                </div>
+                <div class="box">
+                    <label for="mothercitizenshipnumber">Mother's citizenship Number </label>
+                    <input required type="text" name="mothercitizenshipnumber" id="mothercitizenshipnumber">
+                </div>
+                <div class="box">
+                    <label for="husbandcitizenshipnumber">Husband's citizenship Number </label>
+                    <input  type="number" name="husbandcitizenshipnumber" id="husbandcitizenshipnumber">
+                </div>
+                <div class="box1">
+                    <label for="birthcerificatephoto"> Birth Certificate Photo </label>
+                    <input required type="file" name="birthcerificatephoto" id="birthcerificatephoto">
+                </div>
+                <div class="box1">
+                    <label for="fathercitizenship">Father's citizenship Photo </label>
+                    <input required type="file" name="fathercitizenship" id="fathercitizenship">
+                </div>
+                <div class="box1">
+                    <label for="mothercitizenship">Mother's citizenship Photo </label>
+                    <input required type="file" name="mothercitizenship" id="mothercitizenship">
+                </div>
+                <div class="box1">
+                    <label for="husbandcitizenship">Husband's citizenship Photo </label>
+                    <input  type="file" name="husbandcitizenship" id="husbandcitizenship">
+                </div>
+        </div>
+        <div class="border"></div>
+        <!-- Address Details -->
+        <div class="address-details">
+            <h2 style="padding-top: 10px; color: red;">Permanent Address</h2>
+            <div class="box">
+                <label for="Zone">Zone</label>
+                <input required type="text" name="Zone" id="Zone" />
+            </div>
+            <div class="box">
+                <label for="District">District</label>
+                <input required type="text" name="District" id="District" />
+            </div>
+            <div class="box">
+                <label for="Village/Municipality">Village/Municipality</label>
+                <input required type="Village/Municipality" name="Village/Municipality" id="Village/Municipality" />
+            </div>
+            <div class="box">
+                <label for="Ward no">Ward no</label>
+                <input required type="text" name="Ward no" id="Ward no">
+            </div>
+            <div class="box">
+                <label for="Tole">Tole </label>
+                <input required type="text" name="Tole" id="Tole">
+            </div>
+            <div class="box">
+                <label for="House no.">House no. </label>
+                <input required type="text" name="House no." id="House no.">
+            </div>
+        </div>
+        <div class="border"></div>
+        <div class="address-details">
+            <h2 style="padding-top: 10px; color: red;">Temporary Address</h2>
+            <div class="box">
+                <label for="Zone">Zone</label>
+                <input required type="text" name="zone1" id="Zone" />
+            </div>
+            <div class="box">
+                <label for="District">District</label>
+                <input required type="text" name="district1" id="District" />
+            </div>
+            <div class="box">
+                <label for="Village/Municipality">Village/Municipality</label>
+                <input required type="Village/Municipality" name="village1" id="Village/Municipality" />
+            </div>
+            <div class="box">
+                <label for="Ward no">Ward no</label>
+                <input required type="text" name="ward1" id="Ward no">
+            </div>
+            <div class="box">
+                <label for="Tole">Tole </label>
+                <input required type="text" name="tole1" id="Tole">
+            </div>
+            <div class="box">
+                <label for="House no.">House no. </label>
+                <input required type="text" name="house1" id="House no.">
+            </div>
+            <div class="button">
+                <input type="submit" name="submit">
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+<script>
+    function calcAge(date)
+{
+var dob = new Date(date);
+    //calculate month difference from current date in time
+    var month_diff = Date.now() - dob.getTime();
+
+    //convert the calculated difference in date format
+    var age_dt = new Date(month_diff);
+
+    //extract year from date
+    var year = age_dt.getUTCFullYear();
+
+    //now calculate the age of the user
+    var age = Math.abs(year - 1970);
+    document.getElementById('age').value = age;
+    if (age<16){
+        document.getElementById('age_error').innerHTML="Your age must be greater than 16";
+        }
+
+}
+    function validation(phone){
+        if (phone.toString().length<10){
+            document.getElementById('phone_error').innerHTML="Phone number must be of atleat 10 characters";
+    }
+}
+
+</script>
+</body>
+
+</html>
+{% endblock %}
